@@ -452,13 +452,13 @@ with row8_2, _lock:
         All of the elasticity values are negative and are less than 1. This indicates an inelastic (|E| < 1) relation. As such an increase in price causes a decrease in purchase probability.
         ineslastic |E| < 1, elastic |E| > 1
 
-        e.g. an increase in 1% at the price 1.1 would lead to a decrease in purchase probability by 0.69% so inelastic
+        An increase in 1% at the price 1.1 would lead to a decrease in purchase probability by 0.69% so there's an inelastic relation anf
 
-        an increase in 1% at the price 1.5 would lead to an decrease in purchase probability by 1.7% so elastic
+        an increase in 1% at the price 1.5 would lead to an decrease in purchase probability by 1.7% so there's an elastic relation.
 
         As such for inelastic values, general recommendation is to increase the price since there wouldn't be much of a decrease in purchase probability whereas vice versa for elastic
 
-        For prices lower than 1.25(inelasticity) I can increase the price but past 1.25 there's more to gain by reducing the price     
+        For prices lower than 1.25(inelasticity) I can increase the price but past 1.25 there's more to gain by reducing the price due to the elastic nature of the relation.    
     ''')
 
 st.write("### Purchase Probability by Segments")
@@ -571,7 +571,7 @@ with row9_2, _lock:
     st.write('')
     st.write('')
     st.write('''
-    Career-focused segment are the least elastic when compared to the rest. So, their purchase probability elasticity is not as affected by price.
+    Career-focused and the well-off segments are the least elastic when compared to the rest. So, their purchase probability elasticity is not as affected by price.
     
     Standard segment price elasticity seems to differ across price range. This may be due to the fact that
     the standard segment is least homogenous, discovered during descriptive analysis. It may be that the customers in this segment have different shopping habbits, which is why the
@@ -582,14 +582,12 @@ with row9_2, _lock:
     ''')
 
 st.write('''
-    Fewer opportunities segment is price sensitive compared to the mean
-    The point of inelasticity limit is 1.39 which is 14 cents higher than the average turning point 
-    Inelasticity, increase price between 0.5 and 1.39 and decrease them afterwards so as to target purchase probability for Career Focused segment.
-    Fewer opportunities segment is price sensitive compared to the mean.
-    With an increase in price they become more and more elastic, much faster.
+    Fewer opportunities segment is more price sensitive compared to the mean.
+    The point of inelasticity limit is 1.39 which is 14 cents higher than the average turning point.
+    The curve is inelastic but with an increase in price the curve becomes more and more elastic, much faster, and as such increasing the price between 0.5 and 1.39 and decrease the prices afterwards would help move towards the Career Focused segment.
     1.27 is the tipping point as such more inelasticity at lower points..
-    Cluster enjoys the product such that a price increase in the low price range doesn't affect their willingness to buy
-    More expensive it becomes, the less their will in buying
+    Cluster enjoys the product such that a price increase in the low price range doesn't affect their willingness to buy.
+    The more expensive it becomes, the less their will in buying
 ''')
 
 st.write('')
@@ -620,7 +618,7 @@ model_incidence_promotion.fit(X, Y)
 
 # ## Price Elasticity with Promotion
 
-# We create a data frame on which our model will predict. We need to include A price and promotion feature.
+# We create a data frame on which the model will predict. We need to include A price and promotion feature.
 # First, we'll include the price range as the price feature. Next, we'll include the promotion feature.
 df_price_elasticity_promotion = pd.DataFrame(price_range)
 df_price_elasticity_promotion = df_price_elasticity_promotion.rename(columns = {0: "Price_Range"})
@@ -661,7 +659,7 @@ no_promo = Y_no_promo[: , 1]
 price_elasticity_no_promo = model_incidence_promotion.coef_[:, 0] * price_range *(1- no_promo)
 
 # Update master data frame to include purchase probability elasticities without promotion.
-# We can now see the values with and without promotion and compare them for each price point in our price range.
+# We can now see the values with and without promotion and compare them for each price point in the price range.
 df_price_elasticities['Elasticity_Promotion_0'] = price_elasticity_no_promo
 
 plt.figure(figsize = (9, 6))
@@ -688,18 +686,18 @@ with row10_2, _lock:
     st.write('''
     Plot purchase elasticities with and without promotion side by side for comprarisson.
     Observe that the purchase probability elasticity of the customer is less elastic when there is promotion.
-    This is an important insight for marketers, as according to our model people are more likely to buy a product if there is
+    This is an important insight for marketers, as according to the model people are more likely to buy a product if there is
     some promotional activity rather than purchase a product with the same price, when it isn't on promotion. 
 
     ''')
 st.write('### **Brand choice**')
 
 # Here we are interested in determining the brand choice of the customer. 
-# Hence, we filter our data, to include only purchase occasion, when a purchase has occured. 
+# Hence, we filter the data, to include only purchase occasion, when a purchase has occured. 
 brand_choice = df_pa[df_pa['Incidence'] == 1]
 
 
-# Our model will predict the brand.
+# The model will predict the brand.
 Y = brand_choice['Brand']
 # We predict based on the prices for the five brands.
 features = ['Price_1', 'Price_2', 'Price_3', 'Price_4', 'Price_5']
@@ -725,17 +723,17 @@ with row11_1, _lock:
 
 with row11_2, _lock:
     st.write('''
-    I make some transformations on the coefficients data frame to increase readability.
-    I transpose the data frame, to keep with the conventional representation of results.
-    I add labels for the columns and the index, which represent the coefficients of the brands and prices, respectively. 
+    I made some transformations on the coefficients data frame to increase readability.
+    I transposed the data frame, to keep with the conventional representation of results.
+    I added labels for the columns and the index, which represent the coefficients of the brands and prices, respectively. 
     ''')
 
 st.write('')
-st.write('### **Own and cross brand Price elsticity**')
-
+st.write('### **Own and cross brand Price elasticity**')
+st.write('')
 
 # We want to calculate price elasticity of brand choice.
-# Here we create a data frame with price columns, which our model will use to predict the brand choice probabilities.
+# Here we create a data frame with price columns, which The model will use to predict the brand choice probabilities.
 df_own_brand_5 = pd.DataFrame(index = np.arange(price_range.size))
 df_own_brand_5['Price_1'] = brand_choice['Price_1'].mean()
 df_own_brand_5['Price_2'] = brand_choice['Price_2'].mean()
@@ -746,7 +744,7 @@ df_own_brand_5['Price_5'] = price_range
 # Brand Choice Model prediction.
 predict_brand_5 = model_brand_choice.predict_proba(df_own_brand_5)
 
-# Our model returns the probabilities of choosing each of the 5 brands. 
+# The model returns the probabilities of choosing each of the 5 brands. 
 # Since, we are interested in the probability for the fifth brand we need to obtain the last column located on position 4,
 # as we're starting to count from 0.
 pr_own_brand_5 = predict_brand_5[: ][:, 4]
@@ -758,7 +756,7 @@ beta5 = bc_coef.iloc[4, 4]
 # Calculating price elasticities for brand choice without promotion. 
 own_price_elasticity_brand_5 = beta5 * price_range * (1 - pr_own_brand_5)
 
-# Adding the price elasticities to our master data frame. 
+# Adding the price elasticities to The master data frame. 
 df_price_elasticities['Brand_5'] = own_price_elasticity_brand_5
 
 # Plot elasticities of purchase probability for brand 5.
@@ -773,7 +771,7 @@ plt.title('Own Price Elasticity of Purchase Probability for Brand 5')
 
 
 # We want to examine the effect of the changes in price of a competitor brand.
-# As we've discussed in the lecture, the brand which comes closest to our own brand is brand 4. 
+# As we've discussed in the lecture, the brand which comes closest to this brand is brand 4. 
 # Therefore, we need to examine changes in the price of this brand.
 # Keep in mind, we could examine the cross price elasticities for any of the remaining brands, 
 # we just need to update this data frame accordingly to contain the respective brand.
@@ -800,14 +798,14 @@ df_price_elasticities['Brand_5_Cross_Brand_4'] = brand5_cross_brand4_price_elast
 
 # Here we examine the cross price elasticity of purchase probability for brand 5 with respect to brand 4.
 # We observe they are positive. As the price of the competitor brand increases, 
-# so does the probability for purchasing our own brand.
+# so does the probability for purchasing this brand.
 # Even though the elasticity starts to decrease from the 1.45 mark, it is still positive, 
 # signalling that the increase in purchase probability for the own brand happens more slowly.
 
 # ## Own and Cross-Price Elasticity by Segment
 
 # We are interested in analysing the purchase probability for choosing brand 5 by segments.
-# We filter our data to contain only purchase incidences of the third segment - Well-off.
+# We filter the data to contain only purchase incidences of the third segment - Well-off.
 brand_choice_s3 = df_pa[df_pa['Incidence'] == 1]
 brand_choice_s3 = brand_choice_s3[brand_choice_s3['Segment'] == 3]
 
@@ -854,22 +852,10 @@ pr_cross_brand_5_s3 = predict_brand5_cross_brand4_s3[: ][: , 3]
 brand5_cross_brand4_price_elasticity_s3 = -beta5 * price_range * pr_cross_brand_5_s3
 df_price_elasticities['Brand_5_Cross_Brand_4_S3'] = brand5_cross_brand4_price_elasticity_s3
 
-# Using a figure with axes we plot the own brand and cross-brand price elasticities for brand 5 cross brand 4 side by side.
-fig, axs = plt.subplots(1, 2, figsize = (14, 4))
-axs[0].plot(price_range, own_price_elasticity_brand_5_s3, color = 'orange')
-axs[0].set_title('Brand 5 Segment Well-Off')
-axs[0].set_xlabel('Price 5')
-
-axs[1].plot(price_range, brand5_cross_brand4_price_elasticity_s3, color = 'orange')
-axs[1].set_title('Cross Price Elasticity of Brand 5 wrt Brand 4 Segment Well-Off')
-axs[1].set_xlabel('Price 4')
-
-for ax in axs.flat:
-    ax.set(ylabel = 'Elasticity')
 
 
 # Here we are interesting in analysing the brand choice probability of the Standard segment.
-# We filter our data, by selecting only purchases from segment 0.
+# We filter the data, by selecting only purchases from segment 0.
 brand_choice_s0 = df_pa[df_pa['Incidence'] == 1]
 brand_choice_s0 = brand_choice_s0[brand_choice_s0['Segment'] == 0]
 
@@ -903,7 +889,6 @@ pr_own_brand_5_s0 = predict_own_brand_5_s0[: ][: , 4]
 # We'd like to include the elasticities for the segments in order from 0 to three, which is why we use insert() on position 10.
 own_price_elasticity_brand_5_s0 =  beta5 * price_range * (1 - pr_own_brand_5_s0)
 df_price_elasticities.insert(10, column = 'Brand 5 S0', value = own_price_elasticity_brand_5_s0)
-
 
 
 # Calculating cross-brand price elasticity for brand 5 with respect to brand 4 for the Standard segment.
@@ -1019,14 +1004,13 @@ pr_cross_brand_5_s2 = predict_brand5_cross_brand4_s2[: ][: , 3]
 brand5_cross_brand4_price_elasticity_s2 = -beta5 * price_range * pr_cross_brand_5_s2
 df_price_elasticities.insert(15, column = 'Brand_5_Cross_Brand_4_S2', value = brand5_cross_brand4_price_elasticity_s2)
 
-fig1, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(5, 2, figsize = (11, 9), sharex = True)
-
+fig1, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(5, 2, figsize = (14, 20), sharex = True)
+fig1.tight_layout(pad=3.0)
 ax1[0].plot(price_range, own_price_elasticity_brand_5, 'tab:grey')
 ax1[0].set_title('Brand 5 Average Customer')
 ax1[0].set_ylabel('Elasticity')
 ax1[1].plot(price_range, brand5_cross_brand4_price_elasticity, 'tab:grey')
 ax1[1].set_title('Cross Brand 4 Average Customer')
-st.pyplot(fig1)
 
 
 ax2[0].plot(price_range, own_price_elasticity_brand_5_s0)
@@ -1034,7 +1018,6 @@ ax2[0].set_title('Brand 5 Segment Standard')
 ax2[0].set_ylabel('Elasticity')
 ax2[1].plot(price_range, brand5_cross_brand4_price_elasticity_s0)
 ax2[1].set_title('Cross Brand 4 Segment Standard')
-st.pyplot(fig1)
 
 
 ax3[0].plot(price_range, own_price_elasticity_brand_5_s1, 'tab:green')
@@ -1042,14 +1025,13 @@ ax3[0].set_title('Brand 5 Segment Career-Focused')
 ax3[0].set_ylabel('Elasticity')
 ax3[1].plot(price_range, brand5_cross_brand4_price_elasticity_s1, 'tab:green')
 ax3[1].set_title('Cross Brand 4 Segment Career-Focused')
-st.pyplot(fig1)
 
 ax4[0].plot(price_range, own_price_elasticity_brand_5_s2, 'tab:red')
 ax4[0].set_title('Brand 5 Segment Fewer-Opportunities')
 ax4[0].set_ylabel('Elasticity')
 ax4[1].plot(price_range, brand5_cross_brand4_price_elasticity_s2, 'tab:red')
 ax4[1].set_title('Cross Brand 4 Segment Fewer-Opportunities')
-st.pyplot(fig1)
+
 
 
 ax5[0].plot(price_range, own_price_elasticity_brand_5_s3, 'tab:orange')
@@ -1063,15 +1045,15 @@ st.pyplot(fig1)
 
 st.write('''
 
-Plot the own and cross brand price elasticities for the average customer and each of the four segments.
+I plotted the own and cross brand price elasticities for the average customer and each of the four segments.
 Observe differences and similiraties between the segments and examine their preference, when it comes to brand choice.
-The two segments, which seem to be of most interested for the marketing team of brand 5, seem to be the Career-focused
+The two segments, which seem to be of most interest for the marketing team of brand 5, seem to be the Career-focused
 and the Well-off. They are also the segments which purchase this brand most often. 
 The Career-focused segment is the most inelastic and they are the most loyal segment. 
-Based on our model, they do not seem to be that affected by price, therefore brand 5 could increase its price, 
+Based on the model, they do not seem to be that affected by price, therefore brand 5 could increase its price, 
 without fear of significant loss of customers from this segment. 
 The Well-off segment on the other hand, seems to be more elastic. They also purchase the competitor brand 4 most often.
-In order to target this segment, our analysis signals, that price needs to be decreased. However, keep in mind 
+In order to target this segment, the analysis signals that price needs to be decreased. However, keep in mind 
 that other factors aside from price might be influencing the purchase behaivour of this segment.
 
 ''')
@@ -1082,13 +1064,13 @@ st.write('### **Price Elasticity of Purchase Quantity**')
 st.write('''
     I want to determine price elasticity of purchase quantity, also known as price elasticity of demand.
     I'm interested in purchase ocassion, where the purchased quantity is different from 0.
-    Therefore, once again we filter our data to contain only shopping visits where the client has purchased at least one product.
+    Therefore, once again we filter the data to contain only shopping visits where the client has purchased at least one product.
 ''')
 df_purchase_quantity = df_pa[df_pa['Incidence'] == 1]
 
 # Create brand dummies, for each of the five brands.
 df_purchase_quantity = pd.get_dummies(df_purchase_quantity, columns = ['Brand'], prefix = 'Brand', prefix_sep = '_')
-st.write('The descriptive analysis of the purchase quantitiy data frame, shows that quantity ranges from 1 to 15 and has an average value of 2.8, which means that more often than not our customers buy more than 1 chocolate candy bar.')
+st.write('The descriptive analysis of the purchase quantitiy data frame, shows that quantity ranges from 1 to 15 and has an average value of 2.8, which means that more often than not the customers buy more than 1 chocolate candy bar.')
 
 #Find the price of the product that is chosen at this incidence
 df_purchase_quantity['Price_Incidence'] = (df_purchase_quantity['Brand_1'] * df_purchase_quantity['Price_1'] +
@@ -1122,7 +1104,7 @@ beta_quantity = model_quantity.coef_[0]
 
 predict_quantity = model_quantity.predict(df_price_elasticity_quantity)
 
-# We calculate the price elasticity with our new formula. It is the beta coefficient for price multiplied by price
+# We calculate the price elasticity with the new formula. It is the beta coefficient for price multiplied by price
 # and divided by the purchase quantity.
 price_elasticity_quantity_promotion_yes = beta_quantity * price_range / predict_quantity
 
