@@ -27,7 +27,7 @@ _lock = RendererAgg.lock
 
 st.set_page_config(layout="wide")
 
-st.title('''CUSTOMER ANALYTICS''')
+st.title('''ADVANCED CUSTOMER ANALYTICS''')
 
 st.markdown("""
 The goal of this project is to use various Machine Learning techniques to get insight on a set of Customer data, understand customer behaviour and apply this information through marketing strategies.
