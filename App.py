@@ -34,13 +34,13 @@ The goal of this project is to use various Machine Learning techniques to get in
 
 The project is divided into 3 main steps Segmentation, Targeting and Positioning which make up the STP marketing model.
 The STP marketing model is a familiar strategic approach in modern marketing. It is one of the most commonly applied marketing models in practice, with marketing leaders crediting it for efficient, streamlined communications practice.
-It can ve applied to all areas of business and marketing activities.
+It can be applied to all areas of business and marketing activities.
 
 - **Segmentation:** the process of dividing a population of customers into groups that share similar characteristics. Observations within the same group would have comparable and would respond similarly to different marketing activities.
 
 - **Targeting:** the process of evaluating potential profits from each segment and deciding which segments to focus on for example, you can target one segment on TV and another online.
 
-- **Positioning:** what product characteristics do the customers from a certain segment need? Shows how a product should be  presented to the customers and through what channel. This process has a framework of it's own known as **Marketing Mix**
+- **Positioning:** what product characteristics do the customers from a certain segment need? Show how a product should be  presented to the customers and through what channel. This process has a framework of it's own known as **Marketing Mix**
 
 Marketing Mix entails developing the best product or service and offering it at the right price through the right channel. 
 This can be done by finding the purchase probability, brand choice probability and purchase quantity of a product.
@@ -58,7 +58,7 @@ In addition, the volume of the dataset has been restricted and anonymised to pro
 The variables are:-
 - ID numerical Integer that shows a unique identificator of a customer.
 - Sex that is categorical {0,1}	Biological sex (gender) of a customer. 0 for male, 1 for female.
-- Marital status categorical{0,1} 0 for single and 1 for non-single (divorced / separated / married / widocolor = ('b', 'g', 'r', 'orange'))d)	
+- Marital status categorical{0,1} 0 for single and 1 for non-single (divorced / separated / married / widow color = ('b', 'g', 'r', 'orange'))d)	
 - Age of the customer in years
 - Education	categorical	{0,1,2,3}, Level of education of the customer 0 for other / unknown, 1 for high school, 2 for university, 3 for graduate school	
 - Income Self-reported annual income in US dollars of the customer.	
@@ -302,7 +302,7 @@ st.write('''
 The vertical line is the dispersion of data points/sd
 Career focused high dispersion shows that the some groups have higher number of purchases than others
 Basically despite having close to the same income, they spend it differently
-Fewer-Opportunities is homogenous coz of less s.d.
+Fewer-Opportunities is homogenous coz of less standard deviation.
 
 ''')
 
@@ -449,6 +449,7 @@ with row8_2, _lock:
     st.write('')
     st.write('')
     st.write('''
+        All of the elasticity values are negative and are less than 1. This indicates an inelastic (|E| < 1) relation. As such an increase in price causes a decrease in purchase probability.
         ineslastic |E| < 1, elastic |E| > 1
 
         e.g. an increase in 1% at the price 1.1 would lead to a decrease in purchase probability by 0.69% so inelastic
@@ -572,7 +573,7 @@ with row9_2, _lock:
     st.write('''
     Career-focused segment are the least elastic when compared to the rest. So, their purchase probability elasticity is not as affected by price.
     
-    Standard segment price elasticity seem to differ across price range. This may be due to the fact that
+    Standard segment price elasticity seems to differ across price range. This may be due to the fact that
     the standard segment is least homogenous, discovered during descriptive analysis. It may be that the customers in this segment have different shopping habbits, which is why the
     customers start with being more elastic than average but then shift to being more inelastic than the average customer
     and indeed the Career-focused segment.
@@ -581,13 +582,12 @@ with row9_2, _lock:
     ''')
 
 st.write('''
-    Fewer opportunities segment are is price sensitive compared to the mean
+    Fewer opportunities segment is price sensitive compared to the mean
     The point of inelasticity limit is 1.39 which is 14 cents higher than the average turning point 
-    Inelasticity, increase price between 0.5 and 1.39 and decrease them afterwards so as to target purchase prob for Career Focused
-    Fewer opportunities segment are is price sensitive compared to the mean
-    With an increase in price they become more and more elastic, much faster
+    Inelasticity, increase price between 0.5 and 1.39 and decrease them afterwards so as to target purchase probability for Career Focused segment.
+    Fewer opportunities segment is price sensitive compared to the mean.
+    With an increase in price they become more and more elastic, much faster.
     1.27 is the tipping point as such more inelasticity at lower points..
-    Biggest cluster so maybe more inelastcity sophisticated
     Cluster enjoys the product such that a price increase in the low price range doesn't affect their willingness to buy
     More expensive it becomes, the less their will in buying
 ''')
@@ -1020,20 +1020,21 @@ brand5_cross_brand4_price_elasticity_s2 = -beta5 * price_range * pr_cross_brand_
 df_price_elasticities.insert(15, column = 'Brand_5_Cross_Brand_4_S2', value = brand5_cross_brand4_price_elasticity_s2)
 
 fig1, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(5, 2, figsize = (11, 9), sharex = True)
+
 ax1[0].plot(price_range, own_price_elasticity_brand_5, 'tab:grey')
 ax1[0].set_title('Brand 5 Average Customer')
 ax1[0].set_ylabel('Elasticity')
 ax1[1].plot(price_range, brand5_cross_brand4_price_elasticity, 'tab:grey')
 ax1[1].set_title('Cross Brand 4 Average Customer')
+st.pyplot(fig1)
 
-st.pyplot(fig)
 
 ax2[0].plot(price_range, own_price_elasticity_brand_5_s0)
 ax2[0].set_title('Brand 5 Segment Standard')
 ax2[0].set_ylabel('Elasticity')
 ax2[1].plot(price_range, brand5_cross_brand4_price_elasticity_s0)
 ax2[1].set_title('Cross Brand 4 Segment Standard')
-st.pyplot(fig)
+st.pyplot(fig1)
 
 
 ax3[0].plot(price_range, own_price_elasticity_brand_5_s1, 'tab:green')
@@ -1041,14 +1042,14 @@ ax3[0].set_title('Brand 5 Segment Career-Focused')
 ax3[0].set_ylabel('Elasticity')
 ax3[1].plot(price_range, brand5_cross_brand4_price_elasticity_s1, 'tab:green')
 ax3[1].set_title('Cross Brand 4 Segment Career-Focused')
-st.pyplot(fig)
+st.pyplot(fig1)
 
 ax4[0].plot(price_range, own_price_elasticity_brand_5_s2, 'tab:red')
 ax4[0].set_title('Brand 5 Segment Fewer-Opportunities')
 ax4[0].set_ylabel('Elasticity')
 ax4[1].plot(price_range, brand5_cross_brand4_price_elasticity_s2, 'tab:red')
 ax4[1].set_title('Cross Brand 4 Segment Fewer-Opportunities')
-st.pyplot(fig)
+st.pyplot(fig1)
 
 
 ax5[0].plot(price_range, own_price_elasticity_brand_5_s3, 'tab:orange')
@@ -1058,8 +1059,7 @@ ax5[0].set_ylabel('Elasticity')
 ax5[1].plot(price_range, brand5_cross_brand4_price_elasticity_s3, 'tab:orange')
 ax5[1].set_title('Cross Brand 4 Segment Well-off')
 ax5[1].set_xlabel('Price 4')
-
-st.pyplot(fig)
+st.pyplot(fig1)
 
 st.write('''
 
